@@ -1,0 +1,1 @@
+export const ENTER_ACCOUNT = "ENTER_ACCOUNT"
