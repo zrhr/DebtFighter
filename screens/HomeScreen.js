@@ -39,7 +39,7 @@ import { MonoText } from '../components/StyledText';
          <Text>Welcome{props.account.accounts.name? props.account.accounts.name: "you"}</Text>
         </View>
 
-        <View style={styles.getStartedContainer}>
+        <View style={styles.containerStyle}>
           <DevelopmentModeNotice />
 
           <Text style={styles.getStartedText}>Account Name</Text>
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   },
   getStartedContainer: {
     alignItems: 'center',
+
     marginHorizontal: 50,
   },
   homeScreenFilename: {
@@ -152,8 +153,23 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 4,
   },
+  containerStyle: {
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
+  },
   getStartedText: {
-    fontSize: 17,
+
+    fontSize: 24,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
