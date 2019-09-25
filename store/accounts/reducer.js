@@ -1,7 +1,7 @@
 import * as types from './constants'
 
 const initialState ={
-    accounts:{"name":"me"},
+    accounts:{"name":"me", "debt": 0 },
     isLoaded:false
 }
 

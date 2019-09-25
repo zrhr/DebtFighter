@@ -36,7 +36,7 @@ import { MonoText } from '../components/StyledText';
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
-         <Text>Welcome{props.account.accounts.name? props.account.accounts.name: "you"}</Text>
+         <Text>Total Debt: $ {props.account.accounts.debt? props.account.accounts.name: "you"}</Text>
         </View>
 
         <View style={styles.containerStyle}>
