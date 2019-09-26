@@ -48,14 +48,7 @@ import { MonoText } from '../components/StyledText';
             onChangeText={text => changeText(text)}
             onEndEditing={() =>endEditing()}
             ></TextInput>
-            <TextInput placeholder="Enter Interest Rate Here" value={account.apr}
-            onChangeText={text => changeText(text)}
-            onEndEditing={() =>endEditing()}
-            ></TextInput>
-            <TextInput placeholder="Enter Account Balance Here" value={account.currentDebt}
-            onChangeText={text => changeText(text)}
-            onEndEditing={() =>endEditing()}
-            ></TextInput>
+            
         </View>
 
         <View style={styles.helpContainer}>
