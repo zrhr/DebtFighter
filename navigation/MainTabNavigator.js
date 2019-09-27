@@ -26,8 +26,8 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-money${focused ? '' : '-outline'}`
-          : 'md-money'
+          ? `ios-trophy${focused ? '' : '-outline'}`
+          : 'md-globe'
       }
     />
   ),
@@ -45,7 +45,7 @@ const AccountsStack = createStackNavigator(
 AccountsStack.navigationOptions = {
   tabBarLabel: 'Add Account',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-bank' : 'md-bank'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-clock'} />
   ),
 };
 

@@ -1,8 +1,8 @@
 import * as types from './constants'
 
 const initialState ={
-    accounts:{"name":"me", "debt": 0 },
-    isLoaded:false
+    accounts:[{},{}],
+    debtPayment: "200"
 }
 
 export default (state = initialState, action)=>{
@@ -10,7 +10,7 @@ export default (state = initialState, action)=>{
         case types.ENTER_ACCOUNT:
             return({
                 ...state,
-                accounts: action.account
+                debtPayment: action.account
             })
             default:
                 return state

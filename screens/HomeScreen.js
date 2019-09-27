@@ -17,40 +17,72 @@ import { MonoText } from '../components/StyledText';
 
 
  const HomeScreen=(props)=> {
-  const[account, setAccount]=useState({name:""})
+  const[debtPaymentField, setdebtPaymentField]=useState("")
   var name;
  console.log(props)
  const changeText=(inputText)=> {
     const formattedText =  inputText;
-    setAccount({ name: formattedText });
+    setdebtPaymentField(formattedText);
   }
   const endEditing=()=> {
    
-    console.log({"name":account.name})
-    props.onAccount({"name":account.name})
+    
+    props.onAccount(debtPaymentField)
     
   }
+  const totalDebt=5;
+  const totalMonths=19;
+  const totalInterest=10000;
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
-         <Text>Total Debt: $ {props.account.accounts.debt? props.account.accounts.name: "you"}</Text>
+        <View style={styles.titleContainer}><Text style={styles.titleText}>Snowball Debt Fight</Text></View>
+        <View style={styles.userBar}>
+           <View style={{flexDirection:"row", alignItems: "center"}}>
+        <Image
+        style={styles.userPic} 
+        source={require('../assets/images/Snowball-ico1.png')}></Image>
+           <Text style={{marginLeft:10}}>Total Debt: $ {totalDebt}</Text>
+           </View>
+           <View style={{flexDirection:"row", alignItems: "center"}}>
+             <Text>{totalMonths} Months till Debt Free </Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems: "center"}}>
+            <Text>Total Interest Paid: $ {totalInterest}</Text>
+            </View>
+           
+           </View>
         </View>
+        <View style={{flexDirection:"row",alignItems:"center"}}>
+        <TextInput style={{marginLeft: 50, fontSize:24}} placeholder="Amount Here" value={props.account.debtPayment}
+  onChangeText={text => changeText(text)}
+  onEndEditing={() =>endEditing()}
+  ></TextInput>
+        <Text style={styles.getStartedText}>Debt Payment Each Month</Text>
 
+
+  </View>
+
+  {props.account.accounts.map(account=>{return(<>
         <View style={styles.containerStyle}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Account Name</Text>
-
-          <TextInput placeholder="Enter Text Here" value={account.name}
-            onChangeText={text => changeText(text)}
-            onEndEditing={() =>endEditing()}
-            ></TextInput>
-            
+        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}>
+        < View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Name</Text></View>
+        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Months to Pay Off</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Balance</Text></View>
+        </View>
+       <View style={{flexDirection:'row',justifyContent:"space-between", margin: 10}}>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Min Payment</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>APR {}%</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Interest Paid</Text></View>
         </View>
 
+          
+            
+  </View></>)})}
+        
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
             <Text style={styles.helpLinkText}>
@@ -111,10 +143,34 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
+  userBar:{
+    width: 100 +"%",
+    height: 50,
+    backgroundColor: "rgb(255,255,255)",
+    flexDirection: "row",
+    paddingHorizontal:10 ,
+    justifyContent:"space-between"
+
+},
+userPic:{
+    height:40,
+    width: 40,
+    borderRadius:20
+},
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
+  titleContainer:{
+    width: 100 +"%",
+    height: 100,
+    marginTop: 20,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "rgb(250,250,250)",
+    borderBottomColor: "rgb(233,233,233)"
+},
   developmentModeText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
@@ -167,6 +223,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
+    alignItems: 'center' ,
+    flexDirection: 'column'
   },
   getStartedText: {
 
@@ -174,6 +232,25 @@ const styles = StyleSheet.create({
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
+    marginRight:50
+  },
+  cardTitle:{
+    color: '#b8b3c3',
+	fontSize: 16,
+	fontWeight: "bold",
+	marginTop: 4
+  },
+  debtCaption:{
+    color:'#b8b3c3',
+    fontSize: 14,
+    fontWeight: "normal",
+    marginTop: 4
+  },
+
+  titleText:{
+    fontSize: 24,
+    color: "blue",
+    textAlign: 'center'
   },
   tabBarInfoContainer: {
     position: 'absolute',
@@ -216,8 +293,7 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-return({  account: state.accounts,
-  isLoaded: state.isLoaded})
+return({  account: state.accounts})
 }
 const mapDispatchToProps = dispatch => {
   return {
