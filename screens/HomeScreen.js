@@ -237,7 +237,7 @@ userPic:{
     marginRight:50
   },
   cardTitle:{
-    color: '#b8b3c3',
+    color: '#black',
 	fontSize: 16,
 	fontWeight: "bold",
 	marginTop: 4
