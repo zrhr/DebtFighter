@@ -69,15 +69,17 @@ import { MonoText } from '../components/StyledText';
   {props.account.accounts.map(account=>{return(<>
         <View style={styles.containerStyle}>
         <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}>
-        < View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Name</Text></View>
-        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Months to Pay Off</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Balance</Text></View>
+        < View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Name: {account.name}</Text></View>
+        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Months to Pay Off {account.months}</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Balance {account.balance}</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>calcPayment {account.calcPayment}</Text></View>
         </View>
        <View style={{flexDirection:'row',justifyContent:"space-between", margin: 10}}>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Min Payment</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>APR {}%</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Interest Paid</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Min Payment {account.minimumPayment}</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>APR {account.apr}%</Text></View>
+          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Interest Paid {account.interestPaid}</Text></View>
         </View>
+                                                                        
 
           
             
