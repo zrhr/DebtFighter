@@ -65,11 +65,12 @@ import { MonoText } from '../components/StyledText';
 
 
   </View>
-
+<View style={{alignItems: "center"}}>      
   {props.account.accounts.map(account=>{return(<>
-        <View style={styles.containerStyle}>
-        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}>
+        <View  style={styles.containerStyle}>
         < View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Name: {account.name}</Text></View>
+        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}>
+        
         <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Months to Pay Off {account.months}</Text></View>
           <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Balance {account.balance}</Text></View>
           <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>calcPayment {account.calcPayment}</Text></View>
@@ -79,12 +80,13 @@ import { MonoText } from '../components/StyledText';
           <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>APR {account.apr}%</Text></View>
           <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Interest Paid {account.interestPaid}</Text></View>
         </View>
+        
                                                                         
 
           
             
   </View></>)})}
-        
+  </View>
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
             <Text style={styles.helpLinkText}>
@@ -166,7 +168,7 @@ userPic:{
   titleContainer:{
     width: 100 +"%",
     height: 100,
-    marginTop: 20,
+    marginTop: 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
@@ -226,7 +228,8 @@ userPic:{
     marginRight: 5,
     marginTop: 10,
     alignItems: 'center' ,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: 80 +"%"
   },
   getStartedText: {
 
@@ -237,7 +240,7 @@ userPic:{
     marginRight:50
   },
   cardTitle:{
-    color: '#black',
+    color: 'black',
 	fontSize: 16,
 	fontWeight: "bold",
 	marginTop: 4
@@ -264,7 +267,7 @@ userPic:{
         shadowColor: 'black',
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.1,
-        shadowRadius: 3,
+        shadowRadius: 3
       },
       android: {
         elevation: 20,
