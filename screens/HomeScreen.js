@@ -67,25 +67,26 @@ import { MonoText } from '../components/StyledText';
   </View>
 <View style={{alignItems: "center"}}>      
   {props.account.accounts.map(account=>{return(<>
-        <View  style={styles.containerStyle}>
-        < View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Name: {account.name}</Text></View>
-        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}>
+        <View  style={styles.creditStyle}>
+        < View style={styles.cardTitle} ><Text style={styles.cardTitleText}>Name: {account.name}</Text></View>
         
-        <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Months to Pay Off {account.months}</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>Balance {account.balance}</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.cardTitle}>calcPayment {account.calcPayment}</Text></View>
-        </View>
-       <View style={{flexDirection:'row',justifyContent:"space-between", margin: 10}}>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Min Payment {account.minimumPayment}</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>APR {account.apr}%</Text></View>
-          <View style={{flexDirection:'row', justifyContent:"space-between", margin: 10}}><Text style={styles.debtCaption}>Interest Paid {account.interestPaid}</Text></View>
-        </View>
         
-                                                                        
-
-          
-            
-  </View></>)})}
+        <View style={{display:"flex"}}>
+          <Text style={styles.cardNumbers}>BALANCE $ {account.balance} </Text></View>
+          <View style={{flexDirection:'row', justifyContent: "flex-end"}}>
+            <Text style={styles.cardText}> Months Left </Text>
+            <Text style={styles.cardNumbers}>{account.months }</Text>
+            <Text style={styles.cardText}>APR</Text>
+            <Text style={styles.cardNumbers}>{account.apr}</Text>         
+          </View>
+          <View style={{flexDirection:'row', justifyContent: "flex-end"}}>
+            <Text style={styles.cardText}>Min Payment </Text>
+            <Text style={styles.cardNumbers}>{account.minimumPayment }</Text>
+            <Text style={styles.cardText}>New Payment</Text>
+            <Text style={styles.cardNumbers}>{account.calcPayment}</Text>         
+          </View>
+         </View>
+         </>)})}
   </View>
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
@@ -147,7 +148,26 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  userBar:{
+  cardNumbers:{
+    display: "flex",
+    margin: 5,
+    justifyContent: "center",
+    fontFamily: "monospace",
+    fontSize:24,
+    color: "rgba(255,255,255,.8)",
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
+
+  },
+  cardText:{
+    fontSize: 12,
+    fontFamily: "sans-serif",
+    color: "black",
+    margin: 3,
+    marginLeft: 10
+  },
+    userBar:{
     width: 100 +"%",
     height: 50,
     backgroundColor: "rgb(255,255,255)",
@@ -214,9 +234,11 @@ userPic:{
     borderRadius: 3,
     paddingHorizontal: 4,
   },
-  containerStyle: {
+  creditStyle: {
+    backgroundColor: "#3BF",
+    opacity: .8,
     borderWidth: 1,
-    borderRadius: 2,
+    borderRadius: 6,
     borderColor: '#ddd',
     borderBottomWidth: 0,
     shadowColor: '#000',
@@ -227,23 +249,32 @@ userPic:{
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
+    flexShrink: 0,
     alignItems: 'center' ,
     flexDirection: 'column',
-    width: 80 +"%"
+    width: 80 +"%",
+   
   },
   getStartedText: {
-
+   
+    
     fontSize: 24,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
-    marginRight:50
+    
   },
   cardTitle:{
-    color: 'black',
-	fontSize: 16,
+    width:100+"%",
+    padding: 10,
+    backgroundColor:"#C32",
+    margin: 10
+  },
+  cardTitleText:{
+    color: "#FB0",
+	fontSize: 24,
 	fontWeight: "bold",
-	marginTop: 4
+  textAlign: 'center'
   },
   debtCaption:{
     color:'#b8b3c3',

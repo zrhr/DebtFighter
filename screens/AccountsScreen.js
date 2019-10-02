@@ -1,18 +1,18 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import AccountForm from '../components/AccountForm';
-export default function LinksScreen() {
+export default function AccountsScreen() {
   return (
     <ScrollView style={styles.container}>
-      <View style={{alignItems: "center", width: 80+"%"}}>  
+      <View style={{alignItems: "center"}}>  
       <AccountForm></AccountForm>
       </View>
     </ScrollView>
   );
 }
 
-LinksScreen.navigationOptions = {
+AccountsScreen.navigationOptions = {
   title: 'Add Account',
 };
 
