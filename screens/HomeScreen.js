@@ -10,7 +10,7 @@ import {
   View,
   TextInput
 } from 'react-native';
-import {enterAccount }from '../store/accounts/actions'
+import { submitPayment }from '../store/accounts/actions'
 import {connect} from 'react-redux'
 import { MonoText } from '../components/StyledText';
 
@@ -19,7 +19,7 @@ import { MonoText } from '../components/StyledText';
  const HomeScreen=(props)=> {
   const[debtPaymentField, setdebtPaymentField]=useState("")
   var name;
- console.log(props)
+
  const changeText=(inputText)=> {
     const formattedText =  inputText;
     setdebtPaymentField(formattedText);
@@ -66,9 +66,9 @@ import { MonoText } from '../components/StyledText';
 
   </View>
 <View style={{alignItems: "center"}}>      
-  {props.account.accounts.map(account=>{return(<>
-        <View  style={styles.creditStyle}>
-        < View style={styles.cardTitle} ><Text style={styles.cardTitleText}>Name: {account.name}</Text></View>
+  {props.account.accounts.map(account=>{return(
+        <View  key={account.id} style={styles.creditStyle}>
+        <View style={styles.cardTitle} ><Text style={styles.cardTitleText}>Name: {account.name}</Text></View>
         
         
         <View style={{display:"flex"}}>
@@ -86,7 +86,7 @@ import { MonoText } from '../components/StyledText';
             <Text style={styles.cardNumbers}>{account.calcPayment}</Text>         
           </View>
          </View>
-         </>)})}
+         )})}
   </View>
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
@@ -333,8 +333,8 @@ return({  account: state.accounts})
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onAccount: id => {
-      dispatch(enterAccount(id))
+    onAccount: payment => {
+      dispatch(submitPayment(payment))
     }
   }
 }

@@ -1,1 +1,2 @@
 export const ENTER_ACCOUNT = "ENTER_ACCOUNT"
+export const SUBMIT_PAYMENT= "SUBMIT_PAYMENT"

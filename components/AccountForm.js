@@ -1,33 +1,16 @@
 import { Formik } from 'formik';
 import React from 'react';
 import AccountFormView from './AccountFormView';
-
+import { enterAccount }from '../store/accounts/actions'
+import {connect} from 'react-redux'
 const wait = () => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
   }, 1000);
 });
 
-const handleSubmit = async (
-  { firstName, balance, apr, minimumPayment },
-  { resetForm, setStatus, setSubmitting }
-) => {
-  setStatus({});
-  try {
-    await wait();
-    // throw new Error(); // TESTING ERROR CASE
-    resetForm();
-    setStatus({ succeeded: true });
-    setSubmitting(false);
-    console.log(`firstName: ${firstName}`);
-    console.log(`balance: ${balance}`);
-  } catch (err) {
-    setStatus({ failed: true });
-    setSubmitting(false);
-  }
-};
 
-const validate = ({ firstName, balance }) => {
+const validate = ({ firstName, balance,apr,minimumPayment }) => {
   const errors = {};
   if (firstName === undefined) {
     errors.firstName = 'Required';
@@ -52,13 +35,43 @@ const validate = ({ firstName, balance }) => {
   return errors;
 };
 
-const AccountForm = () => (
+const AccountForm = (props) => {
+console.log(props)
+
+  const handleSubmit = async (
+    { firstName, balance, apr, minimumPayment },
+    { resetForm, setStatus, setSubmitting}
+  ) => {
+    setStatus({});
+    try {
+      
+      await wait();
+      // throw new Error(); // TESTING ERROR CASE
+      resetForm();
+      setStatus({ succeeded: true });
+      setSubmitting(true);
+      console.log(`firstName: ${firstName}`);
+      console.log(`balance: ${balance}`);
+     if (props.accounts.accounts.length==0)
+{
+  if (parseFloat(props.debtPayment)<=parseFloat(minimumPayment))
+  console.log("broken")
+}      props.dispatch(enterAccount({"firstName":firstName,"balance":balance, "apr":apr, "minimumPayment":minimumPayment}))
+    } catch (err) {
+      setStatus({ failed: true });
+      setSubmitting(false);
+    }
+  };
+return (
   <Formik
     onSubmit={handleSubmit}
     validate={validate}
     component={AccountFormView}
   />
-);
+);}
 
+const mapStateToProps = (state) => {
+  return( state)
+  }
 
-export default AccountForm;
+  export default connect (mapStateToProps)(AccountForm);
