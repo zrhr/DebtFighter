@@ -10,28 +10,41 @@ const wait = () => new Promise((resolve) => {
 });
 
 
-const validate = ({ firstName, balance,apr,minimumPayment }) => {
+const validate = ({ name, balance,apr,minimumPayment }) => {
   const errors = {};
-  if (firstName === undefined) {
-    errors.firstName = 'Required';
-  } else if (firstName.trim() === '') {
-    errors.firstName = 'Must not be blank';
+  if (name === undefined) {
+    errors.name = 'Required';
+  } else if (name.trim() === '') {
+    errors.name = 'Must not be blank';
   }
   if (balance === undefined) {
     errors.balance = 'Required';
   } else if (balance.trim() === '') {
     errors.balance = 'Must not be blank';
   }
+  else if(isNaN(apr)){
+    errors.apr = "Must be a number"
+  }
+
   if (apr === undefined) {
     errors.apr = 'Required';
   } else if (apr.trim() === '') {
     errors.apr = 'Must not be blank';
-  }
+    }
+    else if(isNaN(apr)){
+      errors.apr = "Must be a number"
+    }
+
+  
   if (minimumPayment === undefined) {
     errors.minimumPayment = 'Required';
   } else if (minimumPayment.trim() === '') {
     errors.minimumPayment = 'Must not be blank';
   }
+  else if(isNaN(apr)){
+    errors.apr = "Must be a number"
+  }
+
   return errors;
 };
 
@@ -39,7 +52,7 @@ const AccountForm = (props) => {
 console.log(props)
 
   const handleSubmit = async (
-    { firstName, balance, apr, minimumPayment },
+    { name, balance, apr, minimumPayment },
     { resetForm, setStatus, setSubmitting}
   ) => {
     setStatus({});
@@ -50,13 +63,14 @@ console.log(props)
       resetForm();
       setStatus({ succeeded: true });
       setSubmitting(true);
-      console.log(`firstName: ${firstName}`);
+      console.log(`name: ${name}`);
       console.log(`balance: ${balance}`);
      if (props.accounts.accounts.length==0)
 {
   if (parseFloat(props.debtPayment)<=parseFloat(minimumPayment))
   console.log("broken")
-}      props.dispatch(enterAccount({"firstName":firstName,"balance":balance, "apr":apr, "minimumPayment":minimumPayment}))
+  props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment, id:props.accounts.length , months: 0, interestPaid: 0, calcPayment:0 }))
+}      props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment}))
     } catch (err) {
       setStatus({ failed: true });
       setSubmitting(false);
@@ -71,7 +85,7 @@ return (
 );}
 
 const mapStateToProps = (state) => {
-  return( state)
+  return( state.accounts)
   }
 
   export default connect (mapStateToProps)(AccountForm);
