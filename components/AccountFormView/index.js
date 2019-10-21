@@ -16,7 +16,7 @@ const SubmissionFormView = ({
     <Field
       component={FKTextInput}
       disabled={isSubmitting}
-      name="firstName" 
+      name="name" 
     />
     <Text>Account Balance</Text>
     <Field

@@ -2,25 +2,26 @@ import * as types from './constants'
 
 const initialState ={
     accounts:[
-        {id: 1 ,name: "Amex", months: 12, balance:100, minimumPayment: 10, apr: .4, interestPaid: 2, calcPayment:5},
-        {id:2 ,name: "Visa", months: 12, balance:100, minimumPayment: 10, apr: .4, interestPaid: 2, calcPayment:5},
-        {id:3 ,name: "MC", months: 12, balance:100, minimumPayment: 10, apr: .4, interestPaid: 2, calcPayment:5}],
-    debtPayment: "200"
+        {id: 1 ,name: "Car Payment", months: 12, balance:15000, minimumPayment: 384, apr: 8, interestPaid: 2, calcPayment:5},
+        {id:2 ,name: "BofA", months: 12, balance:6400, minimumPayment: 150, apr: 11, interestPaid: 2, calcPayment:5},
+        {id:3 ,name: "BofA", months: 12, balance:6800, minimumPayment: 250, apr: 21, interestPaid: 2, calcPayment:5}
+        ],
+    debtPayment: "800",
+    avalanche:{"totalIntrst":0, "totalPayment": 0, "totalTerm":0}
+    ,snowball:{"totalIntrst":0, "totalPayment": 0, "totalTerm":0}    
 }
 
 export default (state = initialState, action)=>{
     switch(action.type){
         case types.ENTER_ACCOUNT:
-            console.log(action.account)
-            return({
-                ...state,
-                accounts: [...state.accounts, {...action.account, id:4 , months: 12, interestPaid: 2, calcPayment:5  }]
+            
+            return({...state, ...action.account}
+            )
+            case types.SUBMIT_PAYMENT:console.log({...state, debtPayment:action.payment});
+                return({ ...state,
+                    "debtPayment": action.payment
+          
             })
-            case types.SUBMIT_PAYMENT:
-                return({
-                    ...state,
-                    debtPayment: action.account
-                })
             default:
                 return state
     

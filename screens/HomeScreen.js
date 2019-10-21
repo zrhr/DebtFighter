@@ -25,14 +25,12 @@ import { MonoText } from '../components/StyledText';
     setdebtPaymentField(formattedText);
   }
   const endEditing=()=> {
-   
+   if(parseFloat(debtPaymentField)>parseFloat(props.account.debtPayment))
     
     props.onAccount(debtPaymentField)
     
   }
-  const totalDebt=5;
-  const totalMonths=19;
-  const totalInterest=10000;
+  
   return (
     <View style={styles.container}>
       <ScrollView
@@ -45,19 +43,35 @@ import { MonoText } from '../components/StyledText';
         <Image
         style={styles.userPic} 
         source={require('../assets/images/Snowball-ico1.png')}></Image>
-           <Text style={{marginLeft:10}}>Total Debt: $ {totalDebt}</Text>
+           <Text style={{marginLeft:10}}>Snowball Total Paid: ${props.account.snowball.totalPayment}</Text>
            </View>
            <View style={{flexDirection:"row", alignItems: "center"}}>
-             <Text>{totalMonths} Months till Debt Free </Text>
+             <Text>{props.account.snowball.totalTerm} Months till Debt Free </Text>
             </View>
             <View style={{flexDirection:"row", alignItems: "center"}}>
-            <Text>Total Interest Paid: $ {totalInterest}</Text>
+            <Text>Total Interest Paid: $ {props.account.snowball.totalIntrst}</Text>
+            </View>
+           
+           </View>
+           <View style={styles.userBar}>
+           <View style={{flexDirection:"row", alignItems: "center"}}>
+        <Image
+        style={styles.userPic} 
+        source={require('../assets/images/Snowball-ico1.png')}></Image>
+           <Text style={{marginLeft:10}}>Avalanche Total Paid: ${props.account.avalanche.totalPayment}</Text>
+           </View>
+           <View style={{flexDirection:"row", alignItems: "center"}}>
+             <Text>{props.account.avalanche.totalTerm} Months till Debt Free </Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems: "center"}}>
+            <Text>Total Interest Paid: $ {props.account.avalanche.totalIntrst}</Text>
             </View>
            
            </View>
         </View>
+        
         <View style={{flexDirection:"row",alignItems:"center"}}>
-        <TextInput style={{marginLeft: 50, fontSize:24}} placeholder="Amount Here" value={props.account.debtPayment}
+        <TextInput style={{marginLeft: 50, fontSize:24}} placeholder="Amount Here" value={debtPaymentField}
   onChangeText={text => changeText(text)}
   onEndEditing={() =>endEditing()}
   ></TextInput>

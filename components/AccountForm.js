@@ -3,6 +3,7 @@ import React from 'react';
 import AccountFormView from './AccountFormView';
 import { enterAccount }from '../store/accounts/actions'
 import {connect} from 'react-redux'
+import { calculateDebt } from './Debt';
 const wait = () => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
@@ -22,8 +23,8 @@ const validate = ({ name, balance,apr,minimumPayment }) => {
   } else if (balance.trim() === '') {
     errors.balance = 'Must not be blank';
   }
-  else if(isNaN(apr)){
-    errors.apr = "Must be a number"
+  else if(isNaN(balance)){
+    errors.balance = "Must be a number"
   }
 
   if (apr === undefined) {
@@ -41,37 +42,74 @@ const validate = ({ name, balance,apr,minimumPayment }) => {
   } else if (minimumPayment.trim() === '') {
     errors.minimumPayment = 'Must not be blank';
   }
-  else if(isNaN(apr)){
-    errors.apr = "Must be a number"
+  else if(isNaN(minimumPayment)){
+    errors.minimumPayment = "Must be a number"
   }
 
   return errors;
 };
 
 const AccountForm = (props) => {
-console.log(props)
+//console.log(calculateDebt(props.accounts.accounts,props.accounts.debtPayment))
 
   const handleSubmit = async (
     { name, balance, apr, minimumPayment },
     { resetForm, setStatus, setSubmitting}
   ) => {
+    let months, interestPaid, calcPayment,data;
     setStatus({});
     try {
-      
+     console.log("try")
+      const accounts =[...props.accounts.accounts, {"name":name,"balance": parseFloat(balance), "apr":parseFloat(apr), "minimumPayment":parseFloat(minimumPayment), id: props.accounts.accounts.length+1 , months: 0, interestPaid: 0, calcPayment:0 }]
+      console.log(accounts)
+      data = calculateDebt(accounts, parseFloat(props.accounts.debtPayment))
       await wait();
-      // throw new Error(); // TESTING ERROR CASE
+      if(data==false)
+      {
+        throw "Error Check your input";
+        console.log("broken")
+      }
+      else{
+      console.log(data)
+      props.dispatch(enterAccount({
+        "accounts":accounts,
+            
+     
+        avalanche:{"totalIntrst":data.avalanche.totalIntrst, "totalPayment": data.avalanche.totalPayment, "totalTerm":data.avalanche.totalTerm}
+        ,snowball:{"totalIntrst":data.snowball.totalIntrst, "totalPayment": data.snowball.totalPayment, "totalTerm":data.snowball.totalTerm}
+    }))
       resetForm();
       setStatus({ succeeded: true });
-      setSubmitting(true);
-      console.log(`name: ${name}`);
-      console.log(`balance: ${balance}`);
-     if (props.accounts.accounts.length==0)
-{
-  if (parseFloat(props.debtPayment)<=parseFloat(minimumPayment))
-  console.log("broken")
-  props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment, id:props.accounts.length , months: 0, interestPaid: 0, calcPayment:0 }))
-}      props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment}))
-    } catch (err) {
+      setSubmitting(false);
+      
+      }
+      
+      // throw new Error(); // TESTING ERROR CASE
+      
+  
+    
+    //  if (accounts.length==0)
+    //   {
+    //     if(props.debtPayment>=parseFloat(minimumPayment))
+    //     {
+          
+    //       props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment, id:props.accounts.length , months: 0, interestPaid: 0, calcPayment:0 }))
+    //     }
+    //     else
+    //     {
+    //       props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment, id:props.accounts.length , months: 0, interestPaid: 0, calcPayment:0 }))
+    //     }
+    //   }
+    //   else {
+    //     if (parseFloat(props.debtPayment)<=parseFloat(minimumPayment)){
+    //       
+    //       props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment, id:props.accounts.length , months: 0, interestPaid: 0, calcPayment:0 }))
+    //     }
+    //      props.dispatch(enterAccount({"name":name,"balance":balance, "apr":apr, "minimumPayment":minimumPayment}))
+    //     }
+          
+        }
+     catch (err) {
       setStatus({ failed: true });
       setSubmitting(false);
     }
@@ -85,7 +123,7 @@ return (
 );}
 
 const mapStateToProps = (state) => {
-  return( state.accounts)
+  return( state)
   }
 
   export default connect (mapStateToProps)(AccountForm);
