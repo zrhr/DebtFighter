@@ -61,8 +61,14 @@ const AccountForm = (props) => {
     try {
      console.log("try")
       const accounts =[...props.accounts.accounts, {"name":name,"balance": parseFloat(balance), "apr":parseFloat(apr), "minimumPayment":parseFloat(minimumPayment), id: props.accounts.accounts.length+1 , months: 0, interestPaid: 0, calcPayment:0 }]
-      console.log(accounts)
-      data = calculateDebt(accounts, parseFloat(props.accounts.debtPayment))
+      var totalDebt=0;
+    var totalminPayment = 0;
+  
+    accounts.forEach((account)=>{
+        totalminPayment += parseFloat(account.minimumPayment)
+        totalDebt += parseFloat(account.balance)
+    })
+      data = calculateDebt(accounts, (totalminPayment>parseFloat(props.accounts.debtPayment)?totalminPayment:parseFloat(props.accounts.debtPayment)));
       await wait();
       if(data==false)
       {
@@ -71,12 +77,12 @@ const AccountForm = (props) => {
       }
       else{
       console.log(data)
-      calcPayment=(data.totalEMi > props.accounts.debtPayment ? data.totalEMi : props.accounts.debtPayment).toString();
+      calcPayment=data.totalEMi.toString();
       console.log(calcPayment)
       props.dispatch(enterAccount({
         "accounts":accounts,
-        "debtPayment": (data.totalEMi > props.accounts.debtPayment ? data.totalEMi : props.accounts.debtPayment).toString(),           
-     
+        "debtPayment": calcPayment,           
+        
         avalanche:{"totalIntrst":data.avalanche.totalIntrst, "totalPayment": data.avalanche.totalPayment, "totalTerm":data.avalanche.totalTerm}
         ,snowball:{"totalIntrst":data.snowball.totalIntrst, "totalPayment": data.snowball.totalPayment, "totalTerm":data.snowball.totalTerm}
     }))

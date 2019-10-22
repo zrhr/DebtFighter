@@ -17,15 +17,22 @@ import { calculateDebt } from '../components/Debt'
 
 
  const HomeScreen=(props)=> {
-  const[debtPaymentField, setdebtPaymentField]=useState("0")
+  const[debtPaymentField, setdebtPaymentField]=useState("")
   var name;
 var data;
+var totalDebt=0;
+var totalminPayment=0;
+props.account.accounts.forEach((account)=>{
+  totalminPayment += parseFloat(account.minimumPayment)
+  totalDebt += parseFloat(account.balance)
+})
  const changeText=(inputText)=> {
     const formattedText =  inputText;
     setdebtPaymentField(formattedText);
   }
   const endEditing=()=> {
-   if(parseFloat(debtPaymentField)>parseFloat(props.account.debtPayment)){
+    
+   if(parseFloat(debtPaymentField)>parseFloat(props.account.debtPayment)|| props.account.debtPayment==""){
     
     
     if(props.account.accounts.length>0)
@@ -44,7 +51,7 @@ var data;
       props.enterAccount({
         "accounts":props.account.accounts,
             
-     
+        "debtPayment": data.totalEMi.toString(),
         avalanche:{"totalIntrst":data.avalanche.totalIntrst, "totalPayment": data.avalanche.totalPayment, "totalTerm":data.avalanche.totalTerm}
         ,snowball:{"totalIntrst":data.snowball.totalIntrst, "totalPayment": data.snowball.totalPayment, "totalTerm":data.snowball.totalTerm}
     })
@@ -66,12 +73,49 @@ var data;
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
-        <View style={styles.titleContainer}><Text style={styles.titleText}>Debt Snowball VS Debt Avalanche</Text></View>
+        <View style={styles.titleContainer}>
+        <Image
+        style={styles.userPic} 
+        source={require('../assets/images/bank.png')}></Image><Text style={styles.titleText}>Debt Snowball VS Debt Avalanche</Text><Text style={styles.titleText}>Calculator</Text></View>
         <View style={styles.userBar}>
            <View style={{flexDirection:"row", alignItems: "center"}}>
         <Image
         style={styles.userPic} 
-        source={require('../assets/images/Snowball-ico1.png')}></Image>
+        source={require('../assets/images/snowballs.png')}></Image>
+           <Text style={{marginLeft:10}}>Total Debt: ${totalDebt}</Text>
+           </View>
+           {/* <View style={{flexDirection:"row", alignItems: "center"}}>
+             <Text>{props.account.snowball.totalTerm} Months till Debt Free </Text>
+            </View> */}
+            <View style={{flexDirection:"row", alignItems: "center"}}>
+            <Text>Total Minimum Payment: $ {totalminPayment}</Text>
+            </View>
+           
+           </View>
+           
+        </View>
+        
+        <View style={{alignItems:"center"}}>
+        
+        
+  
+        <View  style={styles.creditStyle}>
+        
+        
+        
+        <View style={{display:"flex"}}>
+          <View style = {{flexDirection:"row"}}><Text style={styles.cardNumbers}>I can afford to pay </Text>
+          <TextInput style={{fontSize:20}} placeholder="Amount Here" value={debtPaymentField }
+            onChangeText={text => changeText(text)}
+            onEndEditing={() =>endEditing()}> 
+              </TextInput></View><Text style={styles.cardNumbers}>every month to my debt</Text></View>
+                   
+         </View>
+         <View  style={styles.creditStyle}>
+              <View style={{display:"flex"}}>
+          <Text style={styles.cardNumbers}>Snowball Method</Text>
+          <View style={{flexDirection:"row", alignItems: "center"}}>
+        
            <Text style={{marginLeft:10}}>Snowball Total Paid: ${props.account.snowball.totalPayment}</Text>
            </View>
            <View style={{flexDirection:"row", alignItems: "center"}}>
@@ -80,13 +124,13 @@ var data;
             <View style={{flexDirection:"row", alignItems: "center"}}>
             <Text>Total Interest Paid: $ {props.account.snowball.totalIntrst}</Text>
             </View>
-           
-           </View>
-           <View style={styles.userBar}>
-           <View style={{flexDirection:"row", alignItems: "center"}}>
-        <Image
-        style={styles.userPic} 
-        source={require('../assets/images/Snowball-ico1.png')}></Image>
+          </View>         
+         </View>
+         <View  style={styles.creditStyle}>
+              <View style={{display:"flex"}}>
+          <Text style={styles.cardNumbers}> Method</Text>
+          <View style={{flexDirection:"row", alignItems: "center"}}>
+        
            <Text style={{marginLeft:10}}>Avalanche Total Paid: ${props.account.avalanche.totalPayment}</Text>
            </View>
            <View style={{flexDirection:"row", alignItems: "center"}}>
@@ -95,16 +139,8 @@ var data;
             <View style={{flexDirection:"row", alignItems: "center"}}>
             <Text>Total Interest Paid: $ {props.account.avalanche.totalIntrst}</Text>
             </View>
-           
-           </View>
-        </View>
-        
-        <View style={{flexDirection:"row",alignItems:"center"}}>
-        <TextInput style={{marginLeft: 50, fontSize:24}} placeholder="Amount Here" value={debtPaymentField}
-  onChangeText={text => changeText(text)}
-  onEndEditing={() =>endEditing()}
-  ></TextInput>
-        <Text style={styles.getStartedText}>Debt Payment Each Month</Text>
+          </View>         
+         </View>
 
 
   </View>
@@ -140,13 +176,6 @@ var data;
         </View>
       </ScrollView>
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
-
-      
-      </View>
     </View>
   );
 }

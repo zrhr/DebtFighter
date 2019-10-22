@@ -44,7 +44,9 @@ The idea behind this method is that paying off the loan with the smallest balanc
 This method gives you a more immediate feeling of victory, but it might cost more. Making only minimum payments on your highest-interest debt means you'll pay more in interest, as compared to the debt stacking method.
 
 If you have an iPhone, iPad, or other iOS device, there are apps to help you eliminate your debt more quickly via the debt snowball method..`</Text></View></View>
-        
+<View>
+<Text>Icons made by freepik and monkik from www.flaticon.com</Text>
+</View>
         </ScrollView>
         </View>
   )
