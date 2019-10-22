@@ -9,7 +9,7 @@ export default function AccountsScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
-        <View style={styles.titleContainer}><Text style={styles.titleText}>Snowball Debt Fight</Text></View>
+        <View style={styles.titleContainer}><Text style={styles.titleText}>Debt Snowball VS Debt Avalanche</Text></View>
       <AccountForm></AccountForm>
       </View>
     </ScrollView>

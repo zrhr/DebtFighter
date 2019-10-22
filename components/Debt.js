@@ -510,7 +510,7 @@ export const calculateDebt=(accounts, debtPayment)=>{
 		rate 			= parseFloat(rate);
 
        	card 			= debtFree.debtFreeDetails(prncpl, rate, emi);
-       	term			= parseInt(card.payments);
+       	term			= parseFloat(card.payments);
 
        	var obj = {"index": i ,"term":term,"rate":rate,"amnt":prncplArray[i]};
        	cardListObjects.push(obj);
@@ -570,5 +570,5 @@ console.log(totalPrincpal, "total Principal")
 	
 	//generateResult();
     
-    return {"avalanche":avalancheData, "snowball":snowballData};
+    return {"avalanche":avalancheData, "snowball":snowballData, "totalEMi":totalEMi, "totalDebt":totalPrincpal};
 }

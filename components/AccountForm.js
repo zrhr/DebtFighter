@@ -71,9 +71,11 @@ const AccountForm = (props) => {
       }
       else{
       console.log(data)
+      calcPayment=(data.totalEMi > props.accounts.debtPayment ? data.totalEMi : props.accounts.debtPayment).toString();
+      console.log(calcPayment)
       props.dispatch(enterAccount({
         "accounts":accounts,
-            
+        "debtPayment": (data.totalEMi > props.accounts.debtPayment ? data.totalEMi : props.accounts.debtPayment).toString(),           
      
         avalanche:{"totalIntrst":data.avalanche.totalIntrst, "totalPayment": data.avalanche.totalPayment, "totalTerm":data.avalanche.totalTerm}
         ,snowball:{"totalIntrst":data.snowball.totalIntrst, "totalPayment": data.snowball.totalPayment, "totalTerm":data.snowball.totalTerm}

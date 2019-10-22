@@ -6,7 +6,7 @@ const initialState ={
         {id:2 ,name: "BofA", months: 12, balance:6400, minimumPayment: 150, apr: 11, interestPaid: 2, calcPayment:5},
         {id:3 ,name: "BofA", months: 12, balance:6800, minimumPayment: 250, apr: 21, interestPaid: 2, calcPayment:5}
         ],
-    debtPayment: "800",
+    debtPayment: "0",
     avalanche:{"totalIntrst":0, "totalPayment": 0, "totalTerm":0}
     ,snowball:{"totalIntrst":0, "totalPayment": 0, "totalTerm":0}    
 }
@@ -15,7 +15,7 @@ export default (state = initialState, action)=>{
     switch(action.type){
         case types.ENTER_ACCOUNT:
             
-            return({...state, ...action.account}
+            return({ ...action.account}
             )
             case types.SUBMIT_PAYMENT:console.log({...state, debtPayment:action.payment});
                 return({ ...state,

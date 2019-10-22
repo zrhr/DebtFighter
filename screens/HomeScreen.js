@@ -10,26 +10,55 @@ import {
   View,
   TextInput
 } from 'react-native';
-import { submitPayment }from '../store/accounts/actions'
+import { submitPayment, enterAccount }from '../store/accounts/actions'
 import {connect} from 'react-redux'
 import { MonoText } from '../components/StyledText';
-
+import { calculateDebt } from '../components/Debt'
 
 
  const HomeScreen=(props)=> {
-  const[debtPaymentField, setdebtPaymentField]=useState("")
+  const[debtPaymentField, setdebtPaymentField]=useState("0")
   var name;
-
+var data;
  const changeText=(inputText)=> {
     const formattedText =  inputText;
     setdebtPaymentField(formattedText);
   }
   const endEditing=()=> {
-   if(parseFloat(debtPaymentField)>parseFloat(props.account.debtPayment))
+   if(parseFloat(debtPaymentField)>parseFloat(props.account.debtPayment)){
     
-    props.onAccount(debtPaymentField)
     
+    if(props.account.accounts.length>0)
+      {
+        
+        console.log(props.account.accounts,"Rent")
+        data = calculateDebt([...props.account.accounts], parseInt(debtPaymentField))
+  
+      if(data==false)
+      {
+        throw "Error Check your input";
+        console.log("broken")
+      }
+      else{
+      console.log("redux")
+      props.enterAccount({
+        "accounts":props.account.accounts,
+            
+     
+        avalanche:{"totalIntrst":data.avalanche.totalIntrst, "totalPayment": data.avalanche.totalPayment, "totalTerm":data.avalanche.totalTerm}
+        ,snowball:{"totalIntrst":data.snowball.totalIntrst, "totalPayment": data.snowball.totalPayment, "totalTerm":data.snowball.totalTerm}
+    })
+      }
+    }
+    else{
+      props.submitPayment(debtPaymentField)
+    }
   }
+   else{
+     setdebtPaymentField(props.account.debtPayment)
+   }
+ 
+}
   
   return (
     <View style={styles.container}>
@@ -37,7 +66,7 @@ import { MonoText } from '../components/StyledText';
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
-        <View style={styles.titleContainer}><Text style={styles.titleText}>Snowball Debt Fight</Text></View>
+        <View style={styles.titleContainer}><Text style={styles.titleText}>Debt Snowball VS Debt Avalanche</Text></View>
         <View style={styles.userBar}>
            <View style={{flexDirection:"row", alignItems: "center"}}>
         <Image
@@ -347,7 +376,10 @@ return({  account: state.accounts})
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onAccount: payment => {
+    enterAccount: payment=>{
+      dispatch(enterAccount(payment))
+    }
+    ,submitPayment: payment => {
       dispatch(submitPayment(payment))
     }
   }
